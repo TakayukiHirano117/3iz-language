@@ -14,18 +14,18 @@ function callprint(){
     if(tokens.length==0)return;
 
     //関数名がprintであること
-    expect(tokens,"print");
+    var left = expect(tokens,"print");
 
     //関数呼び出しの丸カッコであること
-    expect(tokens,"(");
+    var op = expect(tokens,"(");
 
     //文字列を取得
     var msg = tokens.shift();
     //ダブルクォーテーションを取り除く
-    msg = msg.substr(1,msg.length-2);
-    //表示=即実行
-    console.log(msg);
+    var right = msg.substr(1,msg.length-2);
 
     //閉じカッコであること
-    expect(tokens,")");
+    op += expect(tokens,")");
+
+	return {left, op, right};
 }
