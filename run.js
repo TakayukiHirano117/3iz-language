@@ -6,19 +6,20 @@ var {error}  = require("./utils.js");
 function run(a){
     if(!a) return;
     if(!a.op){
-
         //文字列ならダブルクォーテーションを取り除く
         if(a[0] == '"') return a.substr(1,a.length-2);
-
         //それ以外ならそのまま返す
         return a;
+    }else if(a.op == ";"){
+        //セミコロンだとleft/rightを実行するだけ
+        run(a.left) ;
+        run(a.right);
     }else if(a.op == "()"){
         //leftに関数名
         var func = run(a.left);
         if( func == "print"){
             //rightに表示する文字列
             var msg = run(a.right)
-
             //表示=実行
             console.log(msg);
         }else{
